@@ -1,0 +1,58 @@
+<svg width="400" height="192" viewBox="0 0 400 192" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="skyLux" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFE4E1"/>
+      <stop offset="100%" style="stop-color:#DDA0DD"/>
+    </linearGradient>
+    <linearGradient id="building" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#F5F5DC"/>
+      <stop offset="100%" style="stop-color:#D3D3D3"/>
+    </linearGradient>
+    <linearGradient id="pool" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#00CED1"/>
+      <stop offset="100%" style="stop-color:#4682B4"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Sky -->
+  <rect width="400" height="192" fill="url(#skyLux)"/>
+  
+  <!-- Luxury Hotel Building -->
+  <rect x="50" y="60" width="300" height="100" fill="url(#building)"/>
+  <rect x="60" y="70" width="20" height="30" fill="#4169E1"/>
+  <rect x="90" y="70" width="20" height="30" fill="#4169E1"/>
+  <rect x="120" y="70" width="20" height="30" fill="#4169E1"/>
+  <rect x="150" y="70" width="20" height="30" fill="#4169E1"/>
+  <rect x="180" y="70" width="20" height="30" fill="#4169E1"/>
+  <rect x="210" y="70" width="20" height="30" fill="#4169E1"/>
+  <rect x="240" y="70" width="20" height="30" fill="#4169E1"/>
+  <rect x="270" y="70" width="20" height="30" fill="#4169E1"/>
+  <rect x="300" y="70" width="20" height="30" fill="#4169E1"/>
+  
+  <!-- Second Floor Windows -->
+  <rect x="60" y="110" width="20" height="30" fill="#4169E1"/>
+  <rect x="90" y="110" width="20" height="30" fill="#4169E1"/>
+  <rect x="120" y="110" width="20" height="30" fill="#4169E1"/>
+  <rect x="150" y="110" width="20" height="30" fill="#4169E1"/>
+  <rect x="180" y="110" width="20" height="30" fill="#4169E1"/>
+  <rect x="210" y="110" width="20" height="30" fill="#4169E1"/>
+  <rect x="240" y="110" width="20" height="30" fill="#4169E1"/>
+  <rect x="270" y="110" width="20" height="30" fill="#4169E1"/>
+  <rect x="300" y="110" width="20" height="30" fill="#4169E1"/>
+  
+  <!-- Pool -->
+  <ellipse cx="200" cy="175" rx="80" ry="15" fill="url(#pool)"/>
+  
+  <!-- Palm Trees -->
+  <rect x="20" y="140" width="6" height="40" fill="#8B4513"/>
+  <ellipse cx="23" cy="135" rx="15" ry="6" fill="#228B22"/>
+  <rect x="360" y="140" width="6" height="40" fill="#8B4513"/>
+  <ellipse cx="363" cy="135" rx="15" ry="6" fill="#228B22"/>
+  
+  <!-- Entrance -->
+  <rect x="180" y="140" width="40" height="20" fill="#8B4513"/>
+  <rect x="185" y="145" width="30" height="15" fill="#4169E1"/>
+  
+  <!-- Luxury Text -->
+  <text x="200" y="50" text-anchor="middle" fill="#8B008B" font-family="serif" font-size="16" font-weight="bold">LUXURY RESORT</text>
+</svg>

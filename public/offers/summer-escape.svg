@@ -1,0 +1,47 @@
+<svg width="400" height="192" viewBox="0 0 400 192" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#87CEEB"/>
+      <stop offset="100%" style="stop-color:#4682B4"/>
+    </linearGradient>
+    <linearGradient id="sand" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#F4E4BC"/>
+      <stop offset="100%" style="stop-color:#D2B48C"/>
+    </linearGradient>
+    <linearGradient id="water" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#20B2AA"/>
+      <stop offset="100%" style="stop-color:#008B8B"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Sky -->
+  <rect width="400" height="120" fill="url(#sky)"/>
+  
+  <!-- Water -->
+  <rect y="120" width="400" height="40" fill="url(#water)"/>
+  
+  <!-- Sand -->
+  <rect y="160" width="400" height="32" fill="url(#sand)"/>
+  
+  <!-- Sun -->
+  <circle cx="320" cy="40" r="25" fill="#FFD700"/>
+  <path d="M320 10 L325 20 L320 15 L315 20 Z" fill="#FFD700"/>
+  <path d="M350 40 L340 45 L345 40 L340 35 Z" fill="#FFD700"/>
+  <path d="M320 70 L315 60 L320 65 L325 60 Z" fill="#FFD700"/>
+  <path d="M290 40 L300 35 L295 40 L300 45 Z" fill="#FFD700"/>
+  
+  <!-- Palm Tree -->
+  <rect x="80" y="100" width="8" height="60" fill="#8B4513"/>
+  <ellipse cx="84" cy="95" rx="20" ry="8" fill="#228B22"/>
+  <ellipse cx="84" cy="90" rx="18" ry="6" fill="#32CD32"/>
+  <ellipse cx="84" cy="85" rx="15" ry="5" fill="#228B22"/>
+  
+  <!-- Waves -->
+  <path d="M0 140 Q50 135 100 140 T200 140 T300 140 T400 140" stroke="#87CEEB" stroke-width="2" fill="none"/>
+  <path d="M0 145 Q50 140 100 145 T200 145 T300 145 T400 145" stroke="#B0E0E6" stroke-width="1" fill="none"/>
+  
+  <!-- Beach Umbrella -->
+  <rect x="250" y="140" width="4" height="20" fill="#8B4513"/>
+  <path d="M230 140 Q252 130 274 140" fill="#FF6347"/>
+  <path d="M235 140 Q252 135 269 140" fill="#FF4500"/>
+</svg>
