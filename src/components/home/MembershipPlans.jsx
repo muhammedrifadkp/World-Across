@@ -114,7 +114,7 @@ const MembershipPlans = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-20"
           ref={ref}
         >
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
@@ -131,7 +131,7 @@ const MembershipPlans = () => {
           variants={containerVariants}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
-          className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto"
+          className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto pt-16"
         >
           {plans.map((plan, index) => {
             const IconComponent = plan.icon;
@@ -146,15 +146,15 @@ const MembershipPlans = () => {
               >
                 {/* Popular Badge */}
                 {plan.popular && (
-                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                    <div className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-2 rounded-full text-sm font-bold">
+                  <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10">
+                    <div className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-full text-xs font-bold shadow-lg whitespace-nowrap">
                       MOST POPULAR
                     </div>
                   </div>
                 )}
 
                 {/* Header */}
-                <div className={`bg-gradient-to-r ${plan.color} text-white p-8 text-center`}>
+                <div className={`bg-gradient-to-r ${plan.color} text-white ${plan.popular ? 'pt-12 pb-8 px-8' : 'p-8'} text-center`}>
                   <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-4">
                     <IconComponent size={32} />
                   </div>

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Phone, Mail, MapPin, Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
 
 const Footer = () => {
@@ -12,11 +13,16 @@ const Footer = () => {
           {/* Company Info */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-lg">WA</span>
+              <div className="relative">
+                <Image
+                  src="/world-across-logo-and-name-without-bg.png"
+                  alt="World Across Logo"
+                  width={160}
+                  height={48}
+                  className="h-10 w-auto object-contain brightness-0 invert"
+                />
               </div>
               <div>
-                <h3 className="text-xl font-bold">World Across</h3>
                 <p className="text-sm text-gray-400">Your Gateway to Adventure</p>
               </div>
             </div>

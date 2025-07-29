@@ -1,7 +1,8 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { useRef } from 'react';
 import { Users, MapPin, Calendar, Package, Award, Heart, Globe, Shield } from 'lucide-react';
 import { staticData } from '@/lib/staticApi';
 
@@ -17,11 +18,199 @@ const iconMap = {
   Shield
 };
 
+// Custom hook for timeline item animations
+const useTimelineItemAnimation = (index) => {
+  const [ref, inView] = useInView({
+    triggerOnce: false,
+    threshold: 0.1,
+    rootMargin: '0px 0px -20% 0px'
+  });
+
+  const itemRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: itemRef,
+    offset: ["start end", "end start"]
+  });
+
+  const x = useTransform(
+    scrollYProgress,
+    [0, 0.3, 0.7, 1],
+    index % 2 === 0 ? [-100, 0, 0, 100] : [100, 0, 0, -100]
+  );
+
+  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [1, 1, 1, 1]);
+  const scale = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.9, 1, 1, 0.9]);
+  const rotate = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [5, 0, 0, -5]);
+  const y = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [30, 0, 0, -30]);
+
+  const springX = useSpring(x, { stiffness: 100, damping: 30 });
+  const springY = useSpring(y, { stiffness: 100, damping: 30 });
+  const springScale = useSpring(scale, { stiffness: 100, damping: 30 });
+
+  return { ref: itemRef, inView, springX, springY, opacity, springScale, rotate };
+};
+
+// Timeline Item Component with Advanced Animations
+const TimelineItem = ({ milestone, index }) => {
+  const { ref, inView, springX, springY, opacity, springScale, rotate } = useTimelineItemAnimation(index);
+
+  const isEven = index % 2 === 0;
+
+  // Ensure content is always visible
+  const [contentRef, contentInView] = useInView({
+    triggerOnce: false,
+    threshold: 0.1
+  });
+
+  const cardVariants = {
+    hidden: {
+      opacity: 1,
+      x: isEven ? -50 : 50,
+      scale: 0.95,
+      rotateY: isEven ? -5 : 5
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+      rotateY: 0,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 20,
+        delay: 0.1
+      }
+    },
+    exit: {
+      opacity: 1,
+      x: isEven ? 50 : -50,
+      scale: 0.95,
+      rotateY: isEven ? 5 : -5,
+      transition: {
+        duration: 0.3
+      }
+    }
+  };
+
+  const textVariants = {
+    hidden: { opacity: 0, y: 15 },
+    visible: (i) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: 0.2 + i * 0.1,
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    })
+  };
+
+  return (
+    <motion.div
+      ref={ref}
+      style={{
+        x: springX,
+        y: springY,
+        scale: springScale,
+        rotate
+      }}
+      animate={{
+        opacity: 1
+      }}
+      transition={{ duration: 0.3 }}
+      className={`flex items-center mb-16 relative ${
+        isEven ? 'flex-row' : 'flex-row-reverse'
+      }`}
+    >
+      {/* Content Card */}
+      <motion.div
+        ref={contentRef}
+        className={`flex-1 ${isEven ? 'text-right pr-8' : 'text-left pl-8'}`}
+        variants={cardVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+      >
+        <motion.div
+          className="bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-shadow duration-300 relative overflow-hidden border border-gray-100"
+          whileHover={{
+            scale: 1.02,
+            y: -5,
+            transition: { duration: 0.2 }
+          }}
+          whileTap={{ scale: 0.98 }}
+        >
+          {/* Background Gradient */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-br from-blue-50 to-purple-50 opacity-50"
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 0.5 } : { opacity: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          />
+
+          {/* Content */}
+          <div className="relative z-10">
+            <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-3">
+              {milestone.year}
+            </div>
+
+            <h3 className="text-xl font-bold text-gray-900 mb-3">
+              {milestone.title}
+            </h3>
+
+            <p className="text-gray-600 leading-relaxed">
+              {milestone.description}
+            </p>
+          </div>
+        </motion.div>
+      </motion.div>
+
+      {/* Timeline Dot */}
+      <motion.div
+        className="w-6 h-6 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full relative z-20 shadow-lg"
+        initial={{ scale: 0 }}
+        animate={inView ? { scale: 1 } : { scale: 0 }}
+        transition={{
+          type: "spring",
+          stiffness: 200,
+          damping: 15,
+          delay: 0.2
+        }}
+      >
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"
+          animate={inView ? {
+            scale: [1, 1.5, 1],
+            opacity: [1, 0.5, 1]
+          } : {}}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+      </motion.div>
+
+      {/* Empty space for layout */}
+      <div className="flex-1"></div>
+    </motion.div>
+  );
+};
+
 const AboutPage = () => {
   const [heroRef, heroInView] = useInView({ triggerOnce: true, threshold: 0.1 });
-  const [storyRef, storyInView] = useInView({ triggerOnce: true, threshold: 0.1 });
+  const [storyRef, storyInView] = useInView({ triggerOnce: false, threshold: 0.1 });
   const [teamRef, teamInView] = useInView({ triggerOnce: true, threshold: 0.1 });
   const [valuesRef, valuesInView] = useInView({ triggerOnce: true, threshold: 0.1 });
+
+  // Timeline container scroll progress
+  const timelineRef = useRef(null);
+  const { scrollYProgress: timelineProgress } = useScroll({
+    target: timelineRef,
+    offset: ["start end", "end start"]
+  });
+
+  const timelineHeight = useTransform(timelineProgress, [0, 1], ["0%", "100%"]);
 
   const teamMembers = staticData.getTeamMembers();
   const companyStats = staticData.getCompanyStats();
@@ -199,48 +388,119 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* Timeline Section */}
-      <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
+      {/* Timeline Section - Advanced Scroll Animations */}
+      <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50 relative overflow-hidden">
         <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={storyInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Our Journey
+          {/* Section Header - Fixed Position */}
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                Our Journey
+              </span>
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Milestones that shaped our story and commitment to excellence
             </p>
-          </motion.div>
-
-          <div className="max-w-4xl mx-auto">
-            {milestones.map((milestone, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                animate={storyInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                className={`flex items-center mb-12 ${
-                  index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'
-                }`}
-              >
-                <div className={`flex-1 ${index % 2 === 0 ? 'text-right pr-8' : 'text-left pl-8'}`}>
-                  <div className="bg-white rounded-2xl p-6 shadow-lg">
-                    <div className="text-2xl font-bold text-blue-600 mb-2">{milestone.year}</div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">{milestone.title}</h3>
-                    <p className="text-gray-600">{milestone.description}</p>
-                  </div>
-                </div>
-                <div className="w-4 h-4 bg-blue-600 rounded-full relative z-10">
-                  <div className="absolute inset-0 bg-blue-600 rounded-full animate-ping"></div>
-                </div>
-                <div className="flex-1"></div>
-              </motion.div>
-            ))}
           </div>
+
+          {/* Timeline Container */}
+          <div className="max-w-5xl mx-auto relative" ref={timelineRef}>
+            {/* Animated Timeline Line */}
+            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gray-200 h-full rounded-full">
+              <motion.div
+                className="w-full bg-gradient-to-b from-blue-600 via-purple-600 to-pink-600 origin-top rounded-full shadow-lg"
+                style={{ height: timelineHeight }}
+                transition={{ duration: 0.3 }}
+              />
+              {/* Progress Glow Effect */}
+              <motion.div
+                className="absolute top-0 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-white rounded-full shadow-lg border-2 border-purple-600"
+                style={{
+                  top: timelineHeight,
+                  transition: "top 0.3s ease-out"
+                }}
+                animate={{
+                  scale: [1, 1.2, 1],
+                  boxShadow: [
+                    "0 0 0 0 rgba(147, 51, 234, 0.4)",
+                    "0 0 0 10px rgba(147, 51, 234, 0)",
+                    "0 0 0 0 rgba(147, 51, 234, 0)"
+                  ]
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+            </div>
+
+            {/* Timeline Items */}
+            <div className="space-y-8">
+              {milestones.map((milestone, index) => (
+                <TimelineItem
+                  key={index}
+                  milestone={milestone}
+                  index={index}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Enhanced Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {/* Floating Particles */}
+          {[...Array(6)].map((_, i) => (
+            <motion.div
+              key={i}
+              className={`absolute w-4 h-4 rounded-full ${
+                i % 3 === 0 ? 'bg-blue-300' : i % 3 === 1 ? 'bg-purple-300' : 'bg-pink-300'
+              } opacity-30`}
+              style={{
+                left: `${10 + i * 15}%`,
+                top: `${20 + i * 10}%`,
+              }}
+              animate={{
+                y: [0, -30, 0],
+                x: [0, 10, 0],
+                scale: [1, 1.2, 1],
+                opacity: [0.3, 0.6, 0.3],
+              }}
+              transition={{
+                duration: 4 + i,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 0.5
+              }}
+            />
+          ))}
+
+          {/* Gradient Orbs */}
+          <motion.div
+            className="absolute top-1/4 left-1/4 w-32 h-32 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full opacity-10 blur-xl"
+            animate={{
+              scale: [1, 1.3, 1],
+              rotate: [0, 180, 360],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          />
+          <motion.div
+            className="absolute bottom-1/4 right-1/4 w-24 h-24 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full opacity-10 blur-xl"
+            animate={{
+              scale: [1, 1.2, 1],
+              rotate: [360, 180, 0],
+            }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          />
         </div>
       </section>
 

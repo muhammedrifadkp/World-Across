@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Phone, Mail, MapPin, ChevronDown, User, LogOut } from 'lucide-react';
@@ -90,14 +91,30 @@ const Navbar = () => {
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-xl">WA</span>
+            <Link href="/" className="flex items-center space-x-3">
+              {/* Logo Icon */}
+              <div className="relative">
+                <Image
+                  src="/wa-only-logo-without-bg.png"
+                  alt="World Across Logo"
+                  width={48}
+                  height={48}
+                  className="h-12 w-12 object-contain"
+                  priority
+                />
               </div>
-              <div>
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  World Across
-                </h1>
+              {/* Logo Text and Tagline */}
+              <div className="hidden sm:block">
+                <div className="relative mb-1">
+                  <Image
+                    src="/world-across-name-without-bg.png"
+                    alt="World Across"
+                    width={140}
+                    height={32}
+                    className="h-6 w-auto object-contain"
+                    priority
+                  />
+                </div>
                 <p className="text-xs text-gray-500">Your Gateway to Adventure</p>
               </div>
             </Link>

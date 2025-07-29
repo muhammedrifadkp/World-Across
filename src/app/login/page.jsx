@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Eye, EyeOff, Mail, Lock, AlertCircle } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
@@ -73,14 +74,16 @@ const LoginPage = () => {
       >
         {/* Header */}
         <div className="text-center">
-          <Link href="/" className="inline-flex items-center space-x-2 mb-6">
-            <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-xl">WA</span>
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                World Across
-              </h1>
+          <Link href="/" className="inline-flex items-center justify-center mb-6">
+            <div className="relative">
+              <Image
+                src="/world-across-logo-and-name-without-bg.png"
+                alt="World Across Logo"
+                width={180}
+                height={54}
+                className="h-14 w-auto object-contain"
+                priority
+              />
             </div>
           </Link>
           <h2 className="text-3xl font-bold text-gray-900">Welcome back</h2>

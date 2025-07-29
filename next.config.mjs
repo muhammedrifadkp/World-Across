@@ -4,8 +4,49 @@ const nextConfig = {
 
   // Image optimization
   images: {
-    domains: ['images.unsplash.com', 'via.placeholder.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'plus.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'via.placeholder.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cabinsinsweden.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'blog.sothebysrealty.co.uk',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'assets.insuremytrip.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
     formats: ['image/webp', 'image/avif'],
+    // Allow local images from public folder
+    unoptimized: false,
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
 
   // Handle browser extension modifications gracefully

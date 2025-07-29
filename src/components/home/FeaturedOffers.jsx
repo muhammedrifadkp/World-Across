@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Star, MapPin, Clock, Users, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { packageAPI } from '@/lib/staticApi';
 
 const FeaturedOffers = () => {
@@ -162,9 +163,11 @@ const FeaturedOffers = () => {
             >
               {/* Image Container */}
               <div className="relative overflow-hidden">
-                <img
+                <Image
                   src={offer.image}
                   alt={offer.title}
+                  width={400}
+                  height={192}
                   className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
                 />
                 

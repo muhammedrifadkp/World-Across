@@ -5,6 +5,7 @@ import Footer from "@/components/layout/Footer";
 import { AuthProvider } from "@/contexts/AuthContext";
 import DemoModeWrapper from "@/components/DemoModeWrapper";
 import ClientOnly from "@/components/ClientOnly";
+import LoadingScreen from "@/components/LoadingScreen";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,9 +18,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "World Across - Your Gateway to Extraordinary Travel",
+  title: "World Across",
   description: "Discover amazing destinations with World Across. Membership-based travel portal offering exclusive packages, hotels, and unforgettable experiences worldwide.",
   keywords: "travel, holidays, membership, packages, hotels, destinations, booking",
+  // Next.js will automatically use src/app/icon.png as favicon
 };
 
 export default function RootLayout({ children }) {
@@ -29,7 +31,7 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-gray-900`}
         suppressHydrationWarning
       >
-        <ClientOnly fallback={<div className="min-h-screen bg-white"></div>}>
+        <ClientOnly fallback={<LoadingScreen />}>
           <DemoModeWrapper>
             <AuthProvider>
               <Navbar />
