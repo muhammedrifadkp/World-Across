@@ -47,7 +47,6 @@ const FeaturedOffers = () => {
       title: "SUMMER ESCAPE",
       location: "Goa, India",
       image: "offers/SUMMER-ESCAPE.jpeg",
-      fallbackImage: "/placeholder-image.svg",
       originalPrice: "₹15,000",
       discountedPrice: "₹9,999",
       discount: "33% OFF",
@@ -63,7 +62,6 @@ const FeaturedOffers = () => {
       title: "LUXURY HOLIDAY",
       location: "Kerala, India",
       image: "offers/LUXURY-HOLIDAY.jpeg",
-      fallbackImage: "/placeholder-image.svg",
       originalPrice: "₹25,000",
       discountedPrice: "₹18,999",
       discount: "24% OFF",
@@ -79,7 +77,6 @@ const FeaturedOffers = () => {
       title: "FAMILY FUN",
       location: "Rajasthan, India",
       image: "offers/FAMILY-FUN.jpg",
-      fallbackImage: "/placeholder-image.svg",
       originalPrice: "₹20,000",
       discountedPrice: "₹14,999",
       discount: "25% OFF",
@@ -95,7 +92,6 @@ const FeaturedOffers = () => {
       title: "ROMANTIC GETAWAY",
       location: "Himachal Pradesh, India",
       image: "offers/ROMANTIC-GETAWAY.jpg",
-      fallbackImage: "/placeholder-image.svg",
       originalPrice: "₹18,000",
       discountedPrice: "₹12,999",
       discount: "28% OFF",
@@ -176,7 +172,8 @@ const FeaturedOffers = () => {
                   blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                   onError={(e) => {
                     console.log('Image failed to load:', offer.image);
-                    e.target.src = offer.fallbackImage || '/placeholder-image.svg';
+                    // Hide image on error since we have reliable local images
+                    e.target.style.display = 'none';
                   }}
                 />
                 
