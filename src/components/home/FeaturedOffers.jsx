@@ -15,7 +15,6 @@ const FeaturedOffers = () => {
   });
 
   const [packages, setPackages] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPackages = async () => {
@@ -30,14 +29,13 @@ const FeaturedOffers = () => {
         console.log('Using fallback data for packages');
         setPackages(fallbackOffers);
       } finally {
-        setLoading(false);
+        // Loading complete
       }
     };
 
     // Use fallback data immediately in demo mode to prevent API calls
     if (process.env.NODE_ENV === 'development') {
       setPackages(fallbackOffers);
-      setLoading(false);
     } else {
       fetchPackages();
     }
@@ -49,6 +47,7 @@ const FeaturedOffers = () => {
       title: "SUMMER ESCAPE",
       location: "Goa, India",
       image: "https://cabinsinsweden.com/images/fff22139-0eff-4852-9d57-795791d937cb/coolcation%20in%20sweden.jpg?preset=mainslider",
+      fallbackImage: "/placeholder-image.svg",
       originalPrice: "₹15,000",
       discountedPrice: "₹9,999",
       discount: "33% OFF",
@@ -64,6 +63,7 @@ const FeaturedOffers = () => {
       title: "LUXURY HOLIDAY",
       location: "Kerala, India",
       image: "https://blog.sothebysrealty.co.uk/hubfs/best%20luxury%20holiday%20destinations-webp.webp",
+      fallbackImage: "/placeholder-image.svg",
       originalPrice: "₹25,000",
       discountedPrice: "₹18,999",
       discount: "24% OFF",
@@ -79,6 +79,7 @@ const FeaturedOffers = () => {
       title: "FAMILY FUN",
       location: "Rajasthan, India",
       image: "https://plus.unsplash.com/premium_photo-1664356873951-6a056a304c54?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZmFtaWx5JTIwZnVufGVufDB8fDB8fHww",
+      fallbackImage: "/placeholder-image.svg",
       originalPrice: "₹20,000",
       discountedPrice: "₹14,999",
       discount: "25% OFF",
@@ -94,6 +95,7 @@ const FeaturedOffers = () => {
       title: "ROMANTIC GETAWAY",
       location: "Himachal Pradesh, India",
       image: "https://assets.insuremytrip.com/wp-content/uploads/2024/04/05182330/how_to_help_clients_plan_romantic_getaway.jpg",
+      fallbackImage: "/placeholder-image.svg",
       originalPrice: "₹18,000",
       discountedPrice: "₹12,999",
       discount: "28% OFF",
@@ -174,7 +176,7 @@ const FeaturedOffers = () => {
                   blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                   onError={(e) => {
                     console.log('Image failed to load:', offer.image);
-                    e.target.src = '/placeholder-image.svg';
+                    e.target.src = offer.fallbackImage || '/placeholder-image.svg';
                   }}
                 />
                 
