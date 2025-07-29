@@ -41,6 +41,19 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      // Additional common image domains
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'source.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
     formats: ['image/webp', 'image/avif'],
     // Allow local images from public folder
